@@ -2,7 +2,7 @@ import "./Homepage.css";
 
 function Header() {
   return (
-    <div className="header">
+    <header className="header">
       <img
         src="/src/assets/vite.svg"
         alt="Logo"
@@ -14,7 +14,7 @@ function Header() {
         <a href="#about">Обо мне</a>
         <a href="#contact">Контакты</a>
       </nav>
-    </div>
+    </header>
   );
 }
 

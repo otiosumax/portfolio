@@ -1,12 +1,18 @@
 function Hero() {
   return (
-    <div className="hero">
+    <section className="hero">
       <div className="hero-text">
         <p className="eyebrow">
-          <span className="status-dot">Фронтенд разработчик. Москва.</span>
+          <div className="status-dot" /> &emsp;
+          Фронтенд разработчик. Москва.
         </p>
+        <h1>Делаю сайты</h1>
+        <div>
+          <p>Хай! Я Максим - начинающий фронтенд разработчик.</p>
+        </div>
       </div>
-    </div>
+      <div style={{ height: "400px" }} />
+    </section>
   );
 }
 export default Hero;
