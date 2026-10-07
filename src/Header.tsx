@@ -2,7 +2,7 @@ import "./Homepage.css";
 
 function Header() {
   return (
-    <header className="header">
+    <header id="header" className="header">
       <img
         src="/src/assets/vite.svg"
         alt="Logo"
