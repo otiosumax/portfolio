@@ -1,0 +1,25 @@
+.header {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    padding: 1em var(--padding-w);
+    align-items: center;
+
+    nav {
+        display: flex;
+        gap: 2em;
+        a {
+            padding: 0.5em 1em;
+        }
+    }
+}
+
+.hero {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    align-items: center;
+
+    .eyebrow {
+        padding: 8em var(--padding-w);
+    }
+}

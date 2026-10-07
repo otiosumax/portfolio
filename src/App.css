@@ -1,0 +1,15 @@
+h1,
+h2 {
+    font-family: "Syne", sans-serif;
+    font-weight: bold;
+}
+
+a {
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:visited {
+    color: var(--ink);
+}

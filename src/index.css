@@ -1,0 +1,28 @@
+:root {
+    --yellow: #ffd928;
+    --yellow-soft: #fff2a9;
+    --ink: #171713;
+    --paper: #f5f2e9;
+    --white: #fffefa;
+    --pink: #f3a5ba;
+    --blue: #a7c4ff;
+    --line: 2px solid var(--ink);
+
+    --padding-w: 4em;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "DM Sans", sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
