@@ -23,6 +23,7 @@ body {
     margin: 0;
     background: var(--paper);
     color: var(--ink);
+    /*color: red;*/
     font-family: "DM Sans", sans-serif;
     -webkit-font-smoothing: antialiased;
 }

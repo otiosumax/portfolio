@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
-import ProjectCard from "./ProjectCard";
+import { lazy, Suspense, useEffect, useState } from "react";
 import type { Project } from "../types/Project";
+import { ThreeDot } from "react-loading-indicators";
+
+const ProjectCard = lazy(() => import("./ProjectCard"));
 
 function Projects() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -40,11 +42,27 @@ function Projects() {
 
   return (
     <section id="projects" className="projects">
-      <div className="">
-        {projects.map((project) => {
-          return ProjectCard(project);
-        })}
+      <div className="headline">
+        <p>( Избранные работы )</p>
+        <div className="title-and-text">
+          <h2>Штуки, которыми я горжусь</h2>
+          <p className="scribble">сделано с любовью &lt;3</p>
+        </div>
       </div>
+      <Suspense
+        fallback={
+          <ThreeDot
+            variant="brick-stack"
+            color="#ffd928"
+            size="large"
+          ></ThreeDot>
+        }
+      >
+        <ProjectCard />
+        {projects.map((project) => {
+          return <ProjectCard project={project} />;
+        })}
+      </Suspense>
     </section>
   );
 }

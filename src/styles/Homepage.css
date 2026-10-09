@@ -25,11 +25,6 @@
         h1 {
             max-width: 820px;
             margin: 3rem 0;
-            font-family: "Syne", sans-serif;
-            font-size: clamp(4.5rem, 8.2vw, 8.5rem);
-            font-weight: 700;
-            letter-spacing: -0.075em;
-            line-height: 0.86;
 
             em {
                 position: relative;
@@ -70,6 +65,71 @@
     }
 
     .projects {
-        color: red;
+        padding: 8rem var(--padding-w);
+
+        .headline {
+            margin: 0 0 4rem;
+            display: flex;
+            justify-content: space-between;
+
+            .title-and-text {
+                display: flex;
+                flex-direction: column;
+                align-items: end;
+
+                .scribble::after {
+                    display: block;
+                    width: 85%;
+                    height: 8px;
+                    margin: 0.25rem auto 0;
+                    border-top: 2px solid var(--ink);
+                    border-radius: 50%;
+                    content: "";
+                }
+            }
+        }
+
+        .project-card {
+            margin: 0 0 4em;
+
+            .project-card-text {
+                display: grid;
+                grid-template-columns: 0.6fr 1fr auto;
+                gap: var(--padding-w);
+
+                /*text-align: end;*/
+
+                .project-card-title-and-tags {
+                    text-align: start;
+                }
+
+                img {
+                    padding: 0.8rem;
+                    border: var(--line);
+                    border-radius: 50%;
+
+                    background-color: transparent;
+
+                    transition: ease 250ms;
+                }
+
+                img:hover {
+                    transform: rotate(45deg);
+                    background-color: var(--yellow);
+                }
+            }
+        }
+
+        .project-card > img {
+            box-sizing: border-box;
+            width: 100%;
+            height: min(54vw, 660px);
+            min-height: 430px;
+            aspect-ratio: 16/10;
+
+            object-fit: cover;
+
+            border: var(--line);
+        }
     }
 }

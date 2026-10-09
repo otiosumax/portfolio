@@ -1,7 +1,23 @@
 h1,
-h2 {
+h2,
+h3 {
     font-family: "Syne", sans-serif;
     font-weight: bold;
+}
+
+h1 {
+    font-size: clamp(4.5rem, 8.2vw, 8.5rem);
+    font-weight: bold;
+    letter-spacing: -0.075em;
+    line-height: 0.86;
+}
+
+h2 {
+    margin: 0 0 2rem;
+    font-size: clamp(2.8rem, 5.6vw, 5.8rem);
+    font-weight: bold;
+    letter-spacing: -0.065em;
+    line-height: 0.98;
 }
 
 a {
@@ -12,4 +28,13 @@ a {
 
 a:visited {
     color: var(--ink);
+}
+
+hr {
+    color: var(--ink);
+}
+
+.scribble {
+    width: fit-content;
+    transform: rotate(-5deg);
 }
