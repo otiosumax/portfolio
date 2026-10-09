@@ -3,8 +3,7 @@ import type { Project } from "../types/Project";
 function ProjectCard({
   project = {
     title: "blank_project",
-    imageURL:
-      "https://github.com/otiosumax/squirmles-shop/blob/main/public/images/placeholder.jpg?raw=true",
+    imageURL: "/stones.jpg",
     id: `${(Math.random() * 1e10).toFixed(0)}`,
     tags: ["blank", "project"],
     description: "description",
@@ -16,7 +15,6 @@ function ProjectCard({
   return (
     <div className="project-card">
       <img alt={`screenshot of ${project.title}`} src={project.imageURL} />
-      <div>{project.id}</div>
       <div className="project-card-text">
         <div className="project-card-title-and-tags">
           <h3>{project.title}</h3>
