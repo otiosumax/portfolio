@@ -1,0 +1,16 @@
+.header {
+    width: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    padding: 1em var(--padding-w);
+    align-items: center;
+
+    nav {
+        display: flex;
+        gap: 2em;
+        a {
+            padding: 0.5em 1em;
+        }
+    }
+}
