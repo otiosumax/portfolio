@@ -163,4 +163,40 @@
             }
         }
     }
+
+    .contact {
+        background-color: var(--ink);
+        color: var(--paper);
+        padding: calc(var(--padding-w) * 2) var(--padding-w) 0 var(--padding-w);
+        text-align: center;
+
+        a.mail {
+            font-size: x-large;
+            font-weight: normal;
+            padding: 0.4rem;
+            border-bottom: var(--line);
+            border-color: var(--yellow);
+            color: var(--paper);
+        }
+        a.mail::visited {
+            color: var(--paper);
+        }
+
+        footer {
+            display: grid;
+            grid-template-columns: 0.25fr 1fr 0.25fr;
+            align-items: center;
+            border-top: 1px solid var(--paper);
+            padding: 1.5rem 0;
+
+            .socials {
+                display: inline-flex;
+                justify-content: center;
+                gap: 1rem;
+                a {
+                    color: var(--paper);
+                }
+            }
+        }
+    }
 }

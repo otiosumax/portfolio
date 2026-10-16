@@ -15,7 +15,7 @@ function About() {
 
   return (
     // TODO: написать текстики
-    <section className="about">
+    <section className="about" id="about">
       <div className="about-title">
         <p>( За кулисами )</p>
         <h2>Здесь заголовок о мне великом</h2>
