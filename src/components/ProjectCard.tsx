@@ -2,11 +2,11 @@ import type { Project } from "../types/Project";
 
 function ProjectCard({
   project = {
-    title: "blank_project",
+    title: "placeholder",
     imageURL: "/stones.jpg",
     id: `${(Math.random() * 1e10).toFixed(0)}`,
-    tags: ["blank", "project"],
-    description: "description",
+    tags: ["place", "holder"],
+    description: "if you see this, something went wrong!",
     githubLink: "",
   },
 }: {

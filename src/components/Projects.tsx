@@ -198,8 +198,6 @@ function Projects() {
           />
         }
       >
-        <ProjectCard />
-
         {projects.map((project) => (
           <ProjectCard key={project.id} project={project} />
         ))}

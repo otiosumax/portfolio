@@ -11,7 +11,7 @@ function Hero() {
           <p>Хай! Я Максим - начинающий фронтенд разработчик.</p>
         </div>
       </div>
-      <div style={{ height: "400px" }} />
+      <img className="hero-image" src="/stones.jpg"/>
     </section>
   );
 }

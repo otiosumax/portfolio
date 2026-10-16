@@ -18,7 +18,8 @@
 
     .hero {
         display: grid;
-        grid-template: 1fr / 1fr 1fr;
+        grid-template: 500px / 1fr 1fr;
+        gap: 4vw;
         align-items: center;
         padding: 8em var(--padding-w);
 
@@ -55,6 +56,11 @@
                     box-shadow: 0 0 0 4px #d8e9d5;
                 }
             }
+        }
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     }
 
@@ -131,5 +137,11 @@
 
             border: var(--line);
         }
+    }
+
+    .about {
+        background-color: var(--yellow);
+        padding: calc(var(--padding-w) * 2) var(--padding-w);
+        border-top: var(--line);
     }
 }
