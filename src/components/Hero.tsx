@@ -11,7 +11,7 @@ function Hero() {
           <p>Хай! Я Максим - начинающий фронтенд разработчик.</p>
         </div>
       </div>
-      <img className="hero-image" src="/stones.jpg"/>
+      <img className="hero-image" src="/portfolio/stones.jpg"/>
     </section>
   );
 }

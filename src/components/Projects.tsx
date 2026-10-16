@@ -48,14 +48,16 @@ function Projects() {
     const apiUrl = (route: string) =>
       `${baseUrl}/${route.replace(/^\/+/, "")}`;
 
-    let initialFetchStarted = false;
-    let initialLoaded = false;
+    // Список ещё не загружен или прямо сейчас перечитывается — события
+    // копим и накатываем поверх свежего снимка, чтобы не потерять их.
+    let listLoaded = false;
+    let listLoading = false;
 
-    // События, полученные, пока загружается начальный список.
+    // События, полученные, пока читается список.
     const pendingChanges: ProjectChange[] = [];
 
     const applyOrQueue = (change: ProjectChange) => {
-      if (!initialLoaded) {
+      if (!listLoaded || listLoading) {
         pendingChanges.push(change);
         return;
       }
@@ -102,10 +104,12 @@ function Projects() {
     eventSource.addEventListener("project-updated", onProjectUpsert);
     eventSource.addEventListener("project-deleted", onProjectDeleted);
 
-    const loadInitialProjects = () => {
-      // Не запускаем GET повторно при переподключении SSE.
-      if (initialFetchStarted) return;
-      initialFetchStarted = true;
+    // перечитываем список при каждом (пере)подключении потока: история
+    // событий сервером не хранится, поэтому за время обрыва могли
+    // случиться изменения, о которых мы не узнаем из SSE
+    const loadProjects = () => {
+      if (listLoading) return;
+      listLoading = true;
 
       void fetch(apiUrl(projectsRoute), {
         signal: controller.signal,
@@ -123,14 +127,14 @@ function Projects() {
 
           return data as Project[];
         })
-        .then((initialProjects) => {
-          // Применяем изменения, пришедшие во время начального GET.
+        .then((fetchedProjects) => {
+          // Применяем изменения, пришедшие во время GET.
           const changes = pendingChanges.splice(0);
 
-          initialLoaded = true;
+          listLoaded = true;
 
           setProjects(
-            changes.reduce(applyProjectChange, initialProjects),
+            changes.reduce(applyProjectChange, fetchedProjects),
           );
         })
         .catch((error: unknown) => {
@@ -146,21 +150,25 @@ function Projects() {
           // Если GET завершился ошибкой, продолжаем работать с SSE.
           const changes = pendingChanges.splice(0);
 
-          initialLoaded = true;
+          listLoaded = true;
 
           if (changes.length > 0) {
             setProjects((current) =>
               changes.reduce(applyProjectChange, current),
             );
           }
+        })
+        .finally(() => {
+          listLoading = false;
         });
     };
 
-    // Загружаем список после установления SSE-соединения.
-    eventSource.addEventListener("open", loadInitialProjects);
+    // Загружаем список после установления SSE-соединения и при каждом
+    // последующем переподключении.
+    eventSource.addEventListener("open", loadProjects);
 
     return () => {
-      eventSource.removeEventListener("open", loadInitialProjects);
+      eventSource.removeEventListener("open", loadProjects);
       eventSource.removeEventListener(
         "project-created",
         onProjectUpsert,

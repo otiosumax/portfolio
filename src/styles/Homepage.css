@@ -140,8 +140,27 @@
     }
 
     .about {
+        display: grid;
+        grid-template-columns: 1.25fr 0.75fr;
+        gap: 1.25rem;
+
         background-color: var(--yellow);
         padding: calc(var(--padding-w) * 2) var(--padding-w);
         border-top: var(--line);
+
+        .about-content {
+            .skills {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.8rem 0.6rem;
+
+                .skill-chip {
+                    padding: 0.6rem 0.9rem;
+                    border: var(--line);
+                    border-radius: 100000px;
+                    background-color: var(--yellow-soft);
+                }
+            }
+        }
     }
 }
