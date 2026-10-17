@@ -4,13 +4,14 @@ import Hero from "./components/Hero";
 import Projects from "./components/Projects";
 import About from "./components/About";
 import Contact from "./components/Contact";
+import Marquee from "./components/Marquee";
 
 function Homepage() {
   return (
     <div className="homepage">
       <Header />
       <Hero />
-      <h4>Здеся будет бегущая строка</h4>
+      <Marquee />
       <Projects />
       <About />
       <Contact />

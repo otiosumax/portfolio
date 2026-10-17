@@ -58,15 +58,66 @@
             }
         }
         .hero-image {
-            width: 100%;
+            width: 75%;
             height: 100%;
             object-fit: cover;
+            border: var(--line);
+            border-radius: 50vw 50vw 0 0;
+            box-shadow: 1rem 1rem var(--ink);
+
+            transform: rotate(2deg);
         }
     }
 
     @media (width < 1024px) {
         .hero {
             grid-template: 1fr 1fr / 1fr;
+        }
+    }
+
+    .marquee {
+        width: 105%;
+        background-color: var(--yellow);
+        border-top: var(--line);
+        border-bottom: var(--line);
+        padding: 1.5rem;
+        overflow: hidden;
+
+        transform: rotate(-1deg) translateX(-2.5%);
+
+        .marquee-track {
+            display: flex;
+            width: 200%;
+            animation: scroll 30s linear infinite;
+        }
+
+        .marquee-group {
+            display: flex;
+            flex: 0 0 50%;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .marquee-group p {
+            flex-shrink: 0;
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        /* На узких экранах элементы занимают всю ширину копии, и
+           распределять уже нечего — переходим на обычный поток
+           с фиксированным зазором между элементами. */
+        @media (width < 640px) {
+            .marquee-track {
+                width: max-content;
+            }
+
+            .marquee-group {
+                flex: 0 0 auto;
+                justify-content: flex-start;
+                gap: 2rem;
+                padding-right: 2rem;
+            }
         }
     }
 
@@ -198,5 +249,14 @@
                 }
             }
         }
+    }
+}
+
+@keyframes scroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
     }
 }

@@ -6,7 +6,7 @@
     --white: #fffefa;
     --pink: #f3a5ba;
     --blue: #a7c4ff;
-    --line: 2px solid var(--ink);
+    --line: 2.3px solid var(--ink);
 
     --padding-w: 4em;
 }
