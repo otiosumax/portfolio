@@ -7,7 +7,6 @@ function About({
   aboutInfo?: { title: string; description: string };
   skills?: string[];
 }) {
-
   return (
     // TODO: написать текстики
     <section className="about" id="about">
@@ -18,8 +17,8 @@ function About({
       <div className="about-content">
         <p>{aboutInfo.description}</p>
         <div className="skills">
-          {skills.map((tag) => (
-            <AboutChip>{tag}</AboutChip>
+          {skills.map((tag, index) => (
+            <AboutChip key={index}>{tag}</AboutChip>
           ))}
         </div>
       </div>

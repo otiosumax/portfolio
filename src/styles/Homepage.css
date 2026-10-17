@@ -26,14 +26,18 @@
         h1 {
             max-width: 820px;
             margin: 3rem 0;
+        }
 
-            em {
-                position: relative;
-                z-index: 1;
-                display: inline-block;
-                font-style: normal;
-                white-space: nowrap;
-            }
+        h1::after {
+            content: "";
+            display: block;
+            position:absolute;
+            width: clamp(4.5em, 8.2vw, 6.5em);
+            height: 2rem;
+            z-index: -1;
+            background-color: var(--yellow);
+
+            transform: rotate(-3deg) translateY(-3rem);
         }
 
         .hero-text {
@@ -72,6 +76,10 @@
     @media (width < 1024px) {
         .hero {
             grid-template: auto 500px / 1fr;
+
+            h1::after {
+                transform: translateY(-1.5rem) rotate(-1deg);
+            }
         }
     }
 

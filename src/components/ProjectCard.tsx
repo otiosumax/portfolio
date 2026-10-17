@@ -4,7 +4,7 @@ function ProjectCard({
   project = {
     title: "placeholder",
     imageURL: "/portfolio/stones.jpg",
-    id: `${(Math.random() * 1e10).toFixed(0)}`,
+    id: "id may be here, but it isn't",
     tags: ["place", "holder"],
     description: "if you see this, something went wrong!",
     githubLink: "",

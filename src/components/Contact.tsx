@@ -16,8 +16,10 @@ export default function Contact({
       <footer>
         <span>&copy; 2207 Богданов М.</span>
         <div className="socials">
-          {links.map((link) => (
-            <a href={link.link}>{link.name}</a>
+          {links.map((link, index) => (
+            <a key={index} href={link.link}>
+              {link.name}
+            </a>
           ))}
         </div>
         <div />

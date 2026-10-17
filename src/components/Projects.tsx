@@ -1,4 +1,3 @@
-
 import { lazy, Suspense, useEffect, useState } from "react";
 import type { Project } from "../types/Project";
 import { ThreeDot } from "react-loading-indicators";
@@ -6,8 +5,7 @@ import { ThreeDot } from "react-loading-indicators";
 const ProjectCard = lazy(() => import("./ProjectCard"));
 
 type ProjectChange =
-  | { type: "upsert"; project: Project }
-  | { type: "delete"; id: string };
+  { type: "upsert"; project: Project } | { type: "delete"; id: string };
 
 function applyProjectChange(
   current: Project[],
@@ -17,9 +15,7 @@ function applyProjectChange(
     return current.filter((project) => project.id !== change.id);
   }
 
-  const exists = current.some(
-    (project) => project.id === change.project.id,
-  );
+  const exists = current.some((project) => project.id === change.project.id);
 
   return exists
     ? current.map((project) =>
@@ -34,19 +30,17 @@ function Projects() {
   useEffect(() => {
     const controller = new AbortController();
 
-    const baseUrl = (
-      import.meta.env.VITE_API_BASE_URL ?? ""
-    ).replace(/\/+$/, "");
+    const baseUrl = (import.meta.env.VITE_API_BASE_URL ?? "").replace(
+      /\/+$/,
+      "",
+    );
 
-    const projectsRoute =
-      import.meta.env.VITE_API_ROUTE ?? "/projects";
+    const projectsRoute = import.meta.env.VITE_API_ROUTE ?? "/projects";
 
-    const eventsRoute =
-      import.meta.env.VITE_API_EVENTS_ROUTE ?? "/events";
+    const eventsRoute = import.meta.env.VITE_API_EVENTS_ROUTE ?? "/events";
 
     // Корректно объединяем базовый URL и маршрут.
-    const apiUrl = (route: string) =>
-      `${baseUrl}/${route.replace(/^\/+/, "")}`;
+    const apiUrl = (route: string) => `${baseUrl}/${route.replace(/^\/+/, "")}`;
 
     // Список ещё не загружен или прямо сейчас перечитывается — события
     // копим и накатываем поверх свежего снимка, чтобы не потерять их.
@@ -83,9 +77,9 @@ function Projects() {
 
     const onProjectDeleted: EventListener = (event) => {
       try {
-        const data = JSON.parse(
-          (event as MessageEvent<string>).data,
-        ) as { id?: unknown };
+        const data = JSON.parse((event as MessageEvent<string>).data) as {
+          id?: unknown;
+        };
 
         if (typeof data.id !== "string") {
           throw new Error("Некорректный id удалённого проекта");
@@ -133,19 +127,14 @@ function Projects() {
 
           listLoaded = true;
 
-          setProjects(
-            changes.reduce(applyProjectChange, fetchedProjects),
-          );
+          setProjects(changes.reduce(applyProjectChange, fetchedProjects));
         })
         .catch((error: unknown) => {
           if (error instanceof Error && error.name === "AbortError") {
             return;
           }
 
-          console.error(
-            "Не удалось загрузить данные о проектах:",
-            error,
-          );
+          console.error("Не удалось загрузить данные о проектах:", error);
 
           // Если GET завершился ошибкой, продолжаем работать с SSE.
           const changes = pendingChanges.splice(0);
@@ -169,18 +158,9 @@ function Projects() {
 
     return () => {
       eventSource.removeEventListener("open", loadProjects);
-      eventSource.removeEventListener(
-        "project-created",
-        onProjectUpsert,
-      );
-      eventSource.removeEventListener(
-        "project-updated",
-        onProjectUpsert,
-      );
-      eventSource.removeEventListener(
-        "project-deleted",
-        onProjectDeleted,
-      );
+      eventSource.removeEventListener("project-created", onProjectUpsert);
+      eventSource.removeEventListener("project-updated", onProjectUpsert);
+      eventSource.removeEventListener("project-deleted", onProjectDeleted);
 
       eventSource.close();
       controller.abort();
@@ -199,11 +179,7 @@ function Projects() {
 
       <Suspense
         fallback={
-          <ThreeDot
-            variant="brick-stack"
-            color="#ffd928"
-            size="large"
-          />
+          <ThreeDot variant="brick-stack" color="#ffd928" size="large" />
         }
       >
         {projects.map((project) => (
