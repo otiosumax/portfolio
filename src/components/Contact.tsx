@@ -12,7 +12,7 @@ export default function Contact({
       <a className="mail" type="email" href={`mailto:${email}`}>
         {email}
       </a>
-      <div style={{ height: "8rem" }} />
+      <div style={{ height: "8rem", width: 0 }} />
       <footer>
         <span>&copy; 2207 Богданов М.</span>
         <div className="socials">

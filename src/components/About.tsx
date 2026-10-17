@@ -8,7 +8,6 @@ function About({
   skills?: string[];
 }) {
   return (
-    // TODO: написать текстики
     <section className="about" id="about">
       <div className="about-title">
         <p>( За кулисами )</p>

@@ -6,7 +6,7 @@ h3 {
 }
 
 h1 {
-    font-size: clamp(4.5rem, 8.2vw, 8.5rem);
+    font-size: clamp(3.5em, 8.2vw, 8.5em);
     font-weight: bold;
     letter-spacing: -0.075em;
     line-height: 0.86;
@@ -14,7 +14,7 @@ h1 {
 
 h2 {
     margin: 0 0 2rem;
-    font-size: clamp(2.8rem, 5.6vw, 5.8rem);
+    font-size: clamp(2.2em, 5.6vw, 5.8em);
     font-weight: bold;
     letter-spacing: -0.065em;
     line-height: 0.98;
@@ -22,6 +22,7 @@ h2 {
 
 a {
     color: var(--ink);
+    font-size: clamp(0.8em, 3.5vw, 1.4em);
     text-decoration: none;
     font-weight: bold;
 }

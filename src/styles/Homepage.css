@@ -1,5 +1,5 @@
 .homepage {
-    .header {
+    /*.header {
         width: 100%;
         position: absolute;
         display: flex;
@@ -14,7 +14,7 @@
                 padding: 0.5em 1em;
             }
         }
-    }
+    }*/
 
     .hero {
         display: grid;
@@ -24,6 +24,7 @@
         padding: 8em var(--padding-w);
 
         h1 {
+            /*width:max-content;*/
             max-width: 820px;
             margin: 3rem 0;
         }
@@ -42,7 +43,7 @@
 
         .hero-text {
             max-width: 640px;
-            padding: 0 4rem 0 0;
+            /*padding: 0 4rem 0 0;*/
 
             display: flex;
             flex-direction: column;
@@ -62,7 +63,7 @@
             }
         }
         .hero-image {
-            width: 75%;
+            width: 80%;
             height: 100%;
             object-fit: cover;
             border: var(--line);
@@ -79,6 +80,10 @@
 
             h1::after {
                 transform: translateY(-1.5rem) rotate(-1deg);
+            }
+
+            .hero-image {
+                justify-self: center;
             }
         }
     }
@@ -117,7 +122,7 @@
            с фиксированным зазором между элементами. */
         @media (width < 640px) {
             .marquee-track {
-                width: max-content;
+                width: min-content;
             }
 
             .marquee-group {
@@ -129,7 +134,7 @@
         }
     }
 
-    .projects {
+     .projects {
         padding: 8rem var(--padding-w);
 
         .projects-loading {
@@ -163,6 +168,7 @@
 
         .project-card {
             margin: 0 0 4em;
+            box-sizing:border-box;
 
             .project-card-text {
                 display: grid;
@@ -202,6 +208,23 @@
             object-fit: cover;
 
             border: var(--line);
+        }
+
+        @media (width < 640px) {
+            .headline {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.5rem;
+            }
+
+            .headline .title-and-text {
+                align-items: flex-start;
+            }
+
+            .project-card-text {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
         }
     }
 
@@ -243,7 +266,7 @@
         text-align: center;
 
         a.mail {
-            font-size: x-large;
+            font-size: clamp(1.2em, 5.6vw, 5.8em);
             font-weight: normal;
             padding: 0.4rem;
             border-bottom: var(--line);

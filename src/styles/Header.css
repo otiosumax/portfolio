@@ -24,9 +24,12 @@
 
     nav {
         display: flex;
-        gap: 2em;
+        gap: 1em;
         a {
-            padding: 0.5em 1em;
+            font-size:inherit;
+            padding: 0em 0;
         }
     }
 }
+
+/**/
