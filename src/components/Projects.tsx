@@ -24,8 +24,21 @@ function applyProjectChange(
     : [...current, change.project];
 }
 
+function ProjectsLoader() {
+  return (
+    <div
+      className="projects-loading"
+      role="status"
+      aria-label="Загружаю проекты"
+    >
+      <ThreeDot variant="brick-stack" color="#ffd928" size="large" />
+    </div>
+  );
+}
+
 function Projects() {
   const [projects, setProjects] = useState<Project[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -91,17 +104,35 @@ function Projects() {
       }
     };
 
-    // Подключаем SSE перед начальной загрузкой.
-    const eventSource = new EventSource(apiUrl(eventsRoute));
+    // Соединение может быть нестабильным — повторяем запросы с этим
+    // интервалом.
+    const RETRY_DELAY = 3000;
 
-    eventSource.addEventListener("project-created", onProjectUpsert);
-    eventSource.addEventListener("project-updated", onProjectUpsert);
-    eventSource.addEventListener("project-deleted", onProjectDeleted);
+    let listRetryTimer: ReturnType<typeof setTimeout> | undefined;
+    let listErrorLogged = false;
 
-    // перечитываем список при каждом (пере)подключении потока: история
+    function clearListRetry() {
+      if (listRetryTimer !== undefined) {
+        clearTimeout(listRetryTimer);
+        listRetryTimer = undefined;
+      }
+    }
+
+    function scheduleListRetry() {
+      if (listRetryTimer !== undefined) return;
+
+      listRetryTimer = setTimeout(() => {
+        listRetryTimer = undefined;
+        loadProjects();
+      }, RETRY_DELAY);
+    }
+
+    // Перечитываем список при каждом (пере)подключении потока: история
     // событий сервером не хранится, поэтому за время обрыва могли
-    // случиться изменения, о которых мы не узнаем из SSE
-    const loadProjects = () => {
+    // случиться изменения, о которых мы не узнаем из SSE.
+    function loadProjects() {
+      clearListRetry();
+
       if (listLoading) return;
       listLoading = true;
 
@@ -127,6 +158,12 @@ function Projects() {
 
           listLoaded = true;
 
+          if (listErrorLogged) {
+            console.info("Соединение с сервером восстановлено");
+            listErrorLogged = false;
+          }
+
+          setIsLoading(false);
           setProjects(changes.reduce(applyProjectChange, fetchedProjects));
         })
         .catch((error: unknown) => {
@@ -134,9 +171,13 @@ function Projects() {
             return;
           }
 
-          console.error("Не удалось загрузить данные о проектах:", error);
+          if (!listErrorLogged) {
+            console.error("Не удалось загрузить данные о проектах:", error);
+            listErrorLogged = true;
+          }
 
-          // Если GET завершился ошибкой, продолжаем работать с SSE.
+          // Если GET завершился ошибкой, продолжаем работать с SSE
+          // и повторяем запрос через RETRY_DELAY.
           const changes = pendingChanges.splice(0);
 
           listLoaded = true;
@@ -146,23 +187,71 @@ function Projects() {
               changes.reduce(applyProjectChange, current),
             );
           }
+
+          scheduleListRetry();
         })
         .finally(() => {
           listLoading = false;
         });
-    };
+    }
 
-    // Загружаем список после установления SSE-соединения и при каждом
-    // последующем переподключении.
-    eventSource.addEventListener("open", loadProjects);
+    // Подключаем SSE. При штатном обрыве EventSource переподключается сам,
+    // но фатальную ошибку (например, 404) он не переживает — тогда
+    // пересоздаём соединение через RETRY_DELAY.
+    let eventSource: EventSource | undefined;
+    let reconnectTimer: ReturnType<typeof setTimeout> | undefined;
+    let opened = false;
+    let stopped = false;
+
+    function scheduleReconnect() {
+      if (stopped || reconnectTimer !== undefined) return;
+
+      reconnectTimer = setTimeout(() => {
+        reconnectTimer = undefined;
+        connectEvents();
+      }, RETRY_DELAY);
+    }
+
+    function connectEvents() {
+      const source = new EventSource(apiUrl(eventsRoute));
+      eventSource = source;
+
+      const onOpen = () => {
+        // Первое открытие совпадает с первичной загрузкой, поэтому
+        // перечитываем список только при переподключении.
+        if (opened) loadProjects();
+        opened = true;
+      };
+
+      const onError = () => {
+        if (source.readyState === EventSource.CLOSED) {
+          source.close();
+          scheduleReconnect();
+        }
+      };
+
+      source.addEventListener("open", onOpen);
+      source.addEventListener("error", onError);
+      source.addEventListener("project-created", onProjectUpsert);
+      source.addEventListener("project-updated", onProjectUpsert);
+      source.addEventListener("project-deleted", onProjectDeleted);
+    }
+
+    connectEvents();
+
+    // Список грузим сразу, не дожидаясь SSE: так он появится, даже если
+    // поток недоступен.
+    loadProjects();
 
     return () => {
-      eventSource.removeEventListener("open", loadProjects);
-      eventSource.removeEventListener("project-created", onProjectUpsert);
-      eventSource.removeEventListener("project-updated", onProjectUpsert);
-      eventSource.removeEventListener("project-deleted", onProjectDeleted);
+      stopped = true;
+      clearListRetry();
 
-      eventSource.close();
+      if (reconnectTimer !== undefined) {
+        clearTimeout(reconnectTimer);
+      }
+
+      eventSource?.close();
       controller.abort();
     };
   }, []);
@@ -177,15 +266,15 @@ function Projects() {
         </div>
       </div>
 
-      <Suspense
-        fallback={
-          <ThreeDot variant="brick-stack" color="#ffd928" size="large" />
-        }
-      >
-        {projects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
-        ))}
-      </Suspense>
+      {isLoading ? (
+        <ProjectsLoader />
+      ) : (
+        <Suspense fallback={<ProjectsLoader />}>
+          {projects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
+          ))}
+        </Suspense>
+      )}
     </section>
   );
 }

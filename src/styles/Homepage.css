@@ -132,6 +132,13 @@
     .projects {
         padding: 8rem var(--padding-w);
 
+        .projects-loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 12rem;
+        }
+
         .headline {
             margin: 0 0 4rem;
             display: flex;
