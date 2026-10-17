@@ -6,6 +6,22 @@
     padding: 1em var(--padding-w);
     align-items: center;
 
+    .logo {
+        display: inline-flex;
+        line-height: 0;
+        transition: transform 200ms ease;
+    }
+
+    .logo:hover {
+        transform: rotate(-8deg);
+    }
+
+    .logo-mark {
+        display: block;
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
     nav {
         display: flex;
         gap: 2em;

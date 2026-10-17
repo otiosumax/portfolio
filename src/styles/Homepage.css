@@ -243,7 +243,7 @@
             border-color: var(--yellow);
             color: var(--paper);
         }
-        a.mail::visited {
+        a.mail:visited {
             color: var(--paper);
         }
 
