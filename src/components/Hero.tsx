@@ -1,4 +1,4 @@
-function Hero() {
+function Hero({heroText}: {heroText?: string}) {
   return (
     <section className="hero">
       <div className="hero-text">
@@ -8,10 +8,10 @@ function Hero() {
         </p>
         <h1>Делаю сайты</h1>
         <div>
-          <p>Хай! Я Максим - начинающий фронтенд разработчик.</p>
+          <p>{heroText}</p>
         </div>
       </div>
-      <img className="hero-image" src="/portfolio/stones.jpg"/>
+      <img className="hero-image" src="/portfolio/photo.jpg"/>
     </section>
   );
 }

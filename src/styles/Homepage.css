@@ -18,7 +18,7 @@
 
     .hero {
         display: grid;
-        grid-template: 500px / 1fr 1fr;
+        grid-template: 600px / 1fr 1fr;
         gap: 4vw;
         align-items: center;
         padding: 8em var(--padding-w);
@@ -71,7 +71,7 @@
 
     @media (width < 1024px) {
         .hero {
-            grid-template: 1fr 1fr / 1fr;
+            grid-template: 300px 500px / 1fr;
         }
     }
 
@@ -192,7 +192,7 @@
 
     .about {
         display: grid;
-        grid-template-columns: 1.25fr 0.75fr;
+        grid-template: auto / 1.25fr 0.75fr;
         gap: 1.25rem;
 
         background-color: var(--yellow);
@@ -212,6 +212,12 @@
                     background-color: var(--yellow-soft);
                 }
             }
+        }
+    }
+
+    @media (width < 1024px) {
+        .about {
+            grid-template: auto auto / auto;
         }
     }
 

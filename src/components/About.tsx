@@ -1,27 +1,22 @@
 import AboutChip from "./AboutChip";
 
-function About() {
-  const skills = [
-    'skill',
-    'skill',
-    'skill',
-    'skill',
-    'skill',
-    'skill',
-    'skill',
-    'skill',
-    'skill',
-   ];
+function About({
+  aboutInfo = { title: "title", description: "desc" },
+  skills = [],
+}: {
+  aboutInfo?: { title: string; description: string };
+  skills?: string[];
+}) {
 
   return (
     // TODO: написать текстики
     <section className="about" id="about">
       <div className="about-title">
         <p>( За кулисами )</p>
-        <h2>Здесь заголовок о мне великом</h2>
+        <h2>{aboutInfo.title}</h2>
       </div>
       <div className="about-content">
-        <p>здесь будет что-то про меня</p>
+        <p>{aboutInfo.description}</p>
         <div className="skills">
           {skills.map((tag) => (
             <AboutChip>{tag}</AboutChip>

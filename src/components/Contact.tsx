@@ -1,17 +1,24 @@
-export default function Contact() {
+export default function Contact({
+  email,
+  links = [],
+}: {
+  email?: string;
+  links?: { name: string; link?: string }[];
+}) {
   return (
     <section className="contact" id="contact">
       <p>Ищите фронтенд-разработчика?</p>
       <h2>А я как раз подхожу!</h2>
-      <a className="mail" type="email" href="mailto:bogdanov_maksim.ts@internet.ru">
-        bogdanov_maksim.ts@internet.ru
+      <a className="mail" type="email" href={`mailto:${email}`}>
+        {email}
       </a>
       <div style={{ height: "8rem" }} />
       <footer>
         <span>&copy; 2207 Богданов М.</span>
         <div className="socials">
-          <a href="https://vk.ru/pararararaa">vk</a>
-          <a href="https://t.me/otiosumax">telegram</a>
+          {links.map((link) => (
+            <a href={link.link}>{link.name}</a>
+          ))}
         </div>
         <div />
       </footer>
