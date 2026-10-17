@@ -71,7 +71,7 @@
 
     @media (width < 1024px) {
         .hero {
-            grid-template: 300px 500px / 1fr;
+            grid-template: auto 500px / 1fr;
         }
     }
 
